@@ -8,5 +8,11 @@
       <p>Home</p>
     </a>
   </li>
+  <li class="{{ starts_with(url()->current(), route('users.index')) ? 'active' : '' }}">
+    <a href="{{ route('users.index') }}">
+      <i class="pe-7s-user"></i>
+      <p>Users</p>
+    </a>
+  </li>
 </ul>
 @endsection

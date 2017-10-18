@@ -16,6 +16,8 @@ mix.js('resources/assets/js/app.js', 'public/js')
 
 mix.js('resources/assets/js/home.js', 'public/js');
 
+mix.js('resources/assets/js/users/index.js', 'public/js/users');
+
 mix.copy('resources/assets/img/sidebar-*.jpg', 'public/images');
 mix.js('resources/assets/js/auth.js', 'public/js')
    .sass('resources/assets/sass/auth.scss', 'public/css');
