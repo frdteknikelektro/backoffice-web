@@ -23,6 +23,29 @@
 // Pixeden Stroke 7 Icon
 @import "node_modules/pixeden-stroke-7-icon/pe-icon-7-stroke/scss/pe-icon-7-stroke";
 
+@import "node_modules/datatables.net-bs/css/dataTables.bootstrap";
+@import "node_modules/datatables.net-responsive-bs/css/responsive.bootstrap";
+
+.dataTables_wrapper {
+  margin: 10px;
+
+  .dataTables_filter .btn {
+    height: 40px;
+    border: 1px solid #E3E3E3;
+
+    i {
+      font-size: 26px;
+    }
+  }
+
+  .table-action-button {
+    color: #777777;
+    cursor: pointer;
+    padding: 0px 5px;
+    text-decoration: none;
+  }
+}
+
 /*!
 
  =========================================================

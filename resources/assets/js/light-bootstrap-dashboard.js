@@ -24,6 +24,11 @@ try {
 
   // FlatUI Radiocheck
   require('flatui-radiocheck');
+
+  require('datatables.net');
+  require('datatables.net-bs');
+  require('datatables.net-responsive');
+  require('datatables.net-responsive-bs');
 } catch (e) {
 }
 
