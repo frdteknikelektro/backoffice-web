@@ -4,8 +4,58 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5eba86da256ddeb8084c32d3d10e18d3",
+    "content-hash": "4e05be74c09dace93ad59750aa6c6b6f",
     "packages": [
+        {
+            "name": "atnic/laravel-light-bootstrap-dashboard",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Atnic/laravel-light-bootstrap-dashboard.git",
+                "reference": "c89c56bbc83fe1267b9e7a6772dc29fb0edc89dd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Atnic/laravel-light-bootstrap-dashboard/zipball/c89c56bbc83fe1267b9e7a6772dc29fb0edc89dd",
+                "reference": "c89c56bbc83fe1267b9e7a6772dc29fb0edc89dd",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.4",
+                "php": ">=5.6.4"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "laravel/tinker": "~1.0",
+                "mockery/mockery": "0.9.*",
+                "phpunit/phpunit": "~5.7"
+            },
+            "type": "package",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Atnic\\LightBootstrapDashboard\\Providers\\AppServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Atnic\\LightBootstrapDashboard\\": "app/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "The Laravel Framework.",
+            "keywords": [
+                "composer",
+                "laravel",
+                "light-bootstrap-dashboard",
+                "package"
+            ],
+            "time": "2017-10-18T13:58:30+00:00"
+        },
         {
             "name": "dnoegel/php-xdg-base-dir",
             "version": "0.1",
