@@ -50,7 +50,13 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        if (request()->exists('redirect') && starts_with(urldecode(request()->redirect), request()->root())) {
+            session()->put('url.intended', urldecode(request()->redirect));
+        } else {
+            session()->pull('url.intended');
+        }
+
+        return response()->view('users.create');
     }
 
     /**
@@ -61,7 +67,23 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed|string|min:6'
+        ]);
+
+        $user = new User;
+        foreach ([ 'name', 'email' ] as $key) {
+            if ($request->exists($key)) {
+                $user->{$key} = $request->{$key};
+            }
+        }
+        $user->password = bcrypt($request->password);
+        $user->save();
+
+        return response()->redirectToIntended(route('users.show', [ $user->id ]))
+               ->with([ 'user_id' => $user->id ]);
     }
 
     /**
@@ -83,7 +105,13 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        if (request()->exists('redirect') && starts_with(urldecode(request()->redirect), request()->root())) {
+            session()->put('url.intended', urldecode(request()->redirect));
+        } else {
+            session()->pull('url.intended');
+        }
+
+        return response()->view('users.edit', compact('user'));
     }
 
     /**
@@ -95,7 +123,24 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $this->validate($request, [
+            'name' => 'string',
+            'email' => 'email|unique:users,email,'.$user->id,
+            'password' => 'confirmed|string|min:6|nullable'
+        ]);
+
+        foreach ([ 'name', 'email' ] as $key) {
+            if ($request->exists($key)) {
+                $user->{$key} = $request->{$key};
+            }
+        }
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
+        $user->save();
+
+        return response()->redirectToIntended(route('users.show', [ $user->id ]))
+               ->with([ 'user_id' => $user->id ]);
     }
 
     /**
@@ -106,6 +151,15 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
+        if (request()->ajax()) {
+            return response()->json([
+                'code' => 200,
+                'status' => 'success',
+                'data' => $user
+            ]);
+        }
+        return response()->redirectToIntended(route('users.index'));
     }
 }
