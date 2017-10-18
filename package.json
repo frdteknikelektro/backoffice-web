@@ -25,5 +25,11 @@
         "lodash": "^4.17.4",
         "pixeden-stroke-7-icon": "^1.2.3",
         "vue": "^2.1.10"
+    },
+    "dependencies": {
+        "datatables.net": "^1.10.16",
+        "datatables.net-bs": "^1.10.16",
+        "datatables.net-responsive": "^2.2.0",
+        "datatables.net-responsive-bs": "^2.2.0"
     }
 }
