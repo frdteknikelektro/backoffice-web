@@ -23,6 +23,7 @@ mix.js('resources/assets/js/light-bootstrap-dashboard.js', 'public/js')
    .sass('resources/assets/sass/light-bootstrap-dashboard.scss', 'public/css');
 mix.extract([
   'lodash', 'chartist', 'jquery',
+  'datatables.net', 'datatables.net-bs', 'datatables.net-responsive', 'datatables.net-responsive-bs',
   'bootstrap-notify', 'bootstrap-select', 'bootstrap-switch',
   'vue', 'axios'
 ], 'public/js/vendor.js');

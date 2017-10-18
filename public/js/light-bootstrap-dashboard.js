@@ -1,4 +1,4 @@
-webpackJsonp([4],{
+webpackJsonp([5],{
 
 /***/ "./node_modules/bootstrap-sass/assets/javascripts/bootstrap.js":
 /***/ (function(module, exports) {
@@ -2525,6 +2525,11 @@ try {
 
   // FlatUI Radiocheck
   __webpack_require__("./node_modules/flatui-radiocheck/radiocheck.js");
+
+  __webpack_require__("./node_modules/datatables.net/js/jquery.dataTables.js");
+  __webpack_require__("./node_modules/datatables.net-bs/js/dataTables.bootstrap.js");
+  __webpack_require__("./node_modules/datatables.net-responsive/js/dataTables.responsive.js");
+  __webpack_require__("./node_modules/datatables.net-responsive-bs/js/responsive.bootstrap.js");
 } catch (e) {}
 
 /**
@@ -2752,7 +2757,7 @@ $(function () {
 
 /***/ }),
 
-/***/ 3:
+/***/ 4:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("./resources/assets/js/light-bootstrap-dashboard.js");
@@ -2760,4 +2765,4 @@ module.exports = __webpack_require__("./resources/assets/js/light-bootstrap-dash
 
 /***/ })
 
-},[3]);
+},[4]);

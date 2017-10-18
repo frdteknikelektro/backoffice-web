@@ -2414,6 +2414,118 @@ if (typeof jQuery === 'undefined') {
 
 /***/ }),
 
+/***/ "./node_modules/flatui-radiocheck/radiocheck.js":
+/***/ (function(module, exports) {
+
+/* ============================================================
+ * flatui-radiocheck v0.1.0
+ * ============================================================ */
+
++function (global, $) {
+  'use strict';
+
+  var Radiocheck = function (element, options) {
+    this.init('radiocheck', element, options);
+  };
+
+  Radiocheck.DEFAULTS = {
+    checkboxClass: 'custom-checkbox',
+    radioClass: 'custom-radio',
+    checkboxTemplate: '<span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>',
+    radioTemplate: '<span class="icons"><span class="icon-unchecked"></span><span class="icon-checked"></span></span>'
+  };
+
+  Radiocheck.prototype.init = function (type, element, options) {
+    this.$element = $(element);
+    this.options = $.extend({}, Radiocheck.DEFAULTS, this.$element.data(), options);
+    if (this.$element.attr('type') == 'checkbox') {
+      this.$element.addClass(this.options.checkboxClass);
+      this.$element.after(this.options.checkboxTemplate);
+    } else if (this.$element.attr('type') == 'radio') {
+      this.$element.addClass(this.options.radioClass);
+      this.$element.after(this.options.radioTemplate);
+    }
+  };
+
+  Radiocheck.prototype.check = function () {
+    this.$element.prop('checked', true);
+    this.$element.trigger('change.radiocheck').trigger('checked.radiocheck');
+  },
+
+  Radiocheck.prototype.uncheck = function () {
+    this.$element.prop('checked', false);
+    this.$element.trigger('change.radiocheck').trigger('unchecked.radiocheck');
+  },
+
+  Radiocheck.prototype.toggle = function () {
+    this.$element.prop('checked', function (i, value) {
+      return !value;
+    });
+    this.$element.trigger('change.radiocheck').trigger('toggled.radiocheck');
+  },
+
+  Radiocheck.prototype.indeterminate = function () {
+    this.$element.prop('indeterminate', true);
+    this.$element.trigger('change.radiocheck').trigger('indeterminated.radiocheck');
+  },
+
+  Radiocheck.prototype.determinate = function () {
+    this.$element.prop('indeterminate', false);
+    this.$element.trigger('change.radiocheck').trigger('determinated.radiocheck');
+  },
+
+  Radiocheck.prototype.disable = function () {
+    this.$element.prop('disabled', true);
+    this.$element.trigger('change.radiocheck').trigger('disabled.radiocheck');
+  },
+
+  Radiocheck.prototype.enable = function () {
+    this.$element.prop('disabled', false);
+    this.$element.trigger('change.radiocheck').trigger('enabled.radiocheck');
+  },
+
+  Radiocheck.prototype.destroy = function () {
+    this.$element.removeData().removeClass(this.options.checkboxClass + ' ' + this.options.radioClass).next('.icons').remove();
+    this.$element.trigger('destroyed.radiocheck');
+  };
+
+  // RADIOCHECK PLUGIN DEFINITION
+  // ============================
+
+  function Plugin(option) {
+    return this.each(function () {
+      var $this   = $(this);
+      var data    = $this.data('radiocheck');
+      var options = typeof option == 'object' && option;
+
+      if (!data && option == 'destroy') { return; }
+      if (!data) {
+        $this.data('radiocheck', (data = new Radiocheck(this, options)));
+      }
+      if (typeof option == 'string') {
+        data[option]();
+      }
+    });
+  }
+
+  var old = $.fn.radiocheck;
+
+  $.fn.radiocheck             = Plugin;
+  $.fn.radiocheck.Constructor = Radiocheck;
+
+  // RADIOCHECK NO CONFLICT
+  // ======================
+
+  $.fn.radiocheck.noConflict = function () {
+    $.fn.radiocheck = old;
+    return this;
+  };
+
+}(this, jQuery);
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/component-normalizer.js":
 /***/ (function(module, exports) {
 
@@ -2578,7 +2690,7 @@ if (false) {
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-__webpack_require__("./resources/assets/js/bootstrap.js");
+__webpack_require__("./resources/assets/js/light-bootstrap-dashboard.js");
 
 window.Vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 
@@ -2590,67 +2702,8 @@ window.Vue = __webpack_require__("./node_modules/vue/dist/vue.common.js");
 
 Vue.component('example-component', __webpack_require__("./resources/assets/js/components/ExampleComponent.vue"));
 
-var app = new Vue({
-  el: '#app'
-});
-
-/***/ }),
-
-/***/ "./resources/assets/js/bootstrap.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-
-window._ = __webpack_require__("./node_modules/lodash/lodash.js");
-
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-
-try {
-  window.$ = window.jQuery = __webpack_require__("./node_modules/jquery/dist/jquery.js");
-
-  __webpack_require__("./node_modules/bootstrap-sass/assets/javascripts/bootstrap.js");
-} catch (e) {}
-
-/**
- * We'll load the axios HTTP library which allows us to easily issue requests
- * to our Laravel back-end. This library automatically handles sending the
- * CSRF token as a header based on the value of the "XSRF" token cookie.
- */
-
-window.axios = __webpack_require__("./node_modules/axios/index.js");
-
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-/**
- * Next we will register the CSRF Token as a common header with Axios so that
- * all outgoing HTTP requests automatically have it attached. This is just
- * a simple convenience so we don't have to attach every token manually.
- */
-
-var token = document.head.querySelector('meta[name="csrf-token"]');
-
-if (token) {
-  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
-} else {
-  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
-
-/**
- * Echo exposes an expressive API for subscribing to channels and listening
- * for events that are broadcast by Laravel. Echo and event broadcasting
- * allows your team to easily build robust real-time web applications.
- */
-
-// import Echo from 'laravel-echo'
-
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
+// const app = new Vue({
+//     el: '#app'
 // });
 
 /***/ }),
@@ -2701,6 +2754,267 @@ if (false) {(function () {
 
 module.exports = Component.exports
 
+
+/***/ }),
+
+/***/ "./resources/assets/js/light-bootstrap-dashboard.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+window._ = __webpack_require__("./node_modules/lodash/lodash.js");
+window.Chartist = __webpack_require__("./node_modules/chartist/dist/chartist.js");
+
+/**
+ * We'll load jQuery and the Bootstrap jQuery plugin which provides support
+ * for JavaScript based Bootstrap features such as modals and tabs. This
+ * code may be modified to fit the specific needs of your application.
+ */
+
+try {
+  window.$ = window.jQuery = __webpack_require__("./node_modules/jquery/dist/jquery.js");
+
+  // Bootstrap Sass
+  __webpack_require__("./node_modules/bootstrap-sass/assets/javascripts/bootstrap.js");
+
+  // Bootstrap Notify
+  __webpack_require__("./node_modules/bootstrap-notify/bootstrap-notify.js");
+
+  // Bootstrap Select
+  __webpack_require__("./node_modules/bootstrap-select/dist/js/bootstrap-select.js");
+
+  // Bootstrap Select
+  __webpack_require__("./node_modules/bootstrap-switch/dist/js/bootstrap-switch.js");
+
+  // FlatUI Radiocheck
+  __webpack_require__("./node_modules/flatui-radiocheck/radiocheck.js");
+
+  __webpack_require__("./node_modules/datatables.net/js/jquery.dataTables.js");
+  __webpack_require__("./node_modules/datatables.net-bs/js/dataTables.bootstrap.js");
+  __webpack_require__("./node_modules/datatables.net-responsive/js/dataTables.responsive.js");
+  __webpack_require__("./node_modules/datatables.net-responsive-bs/js/responsive.bootstrap.js");
+} catch (e) {}
+
+/**
+ * We'll load the axios HTTP library which allows us to easily issue requests
+ * to our Laravel back-end. This library automatically handles sending the
+ * CSRF token as a header based on the value of the "XSRF" token cookie.
+ */
+
+window.axios = __webpack_require__("./node_modules/axios/index.js");
+
+window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+/**
+ * Next we will register the CSRF Token as a common header with Axios so that
+ * all outgoing HTTP requests automatically have it attached. This is just
+ * a simple convenience so we don't have to attach every token manually.
+ */
+
+var token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+  window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+  console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
+}
+
+/**
+ * Echo exposes an expressive API for subscribing to channels and listening
+ * for events that are broadcast by Laravel. Echo and event broadcasting
+ * allows your team to easily build robust real-time web applications.
+ */
+
+// import Echo from 'laravel-echo'
+
+// window.Pusher = require('pusher-js');
+
+// window.Echo = new Echo({
+//     broadcaster: 'pusher',
+//     key: 'your-pusher-key'
+// });
+
+/*!
+
+ =========================================================
+ * Light Bootstrap Dashboard - v1.3.1.0
+ =========================================================
+
+ * Product Page: http://www.creative-tim.com/product/light-bootstrap-dashboard
+ * Copyright 2017 Creative Tim (http://www.creative-tim.com)
+ * Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard/blob/master/LICENSE.md)
+
+ =========================================================
+
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+ */
+
+var searchVisible = 0;
+var transparent = true;
+
+var transparentDemo = true;
+var fixedTop = false;
+
+var navbar_initialized = false;
+
+$(document).ready(function () {
+  window_width = $(window).width();
+
+  // check if there is an image set for the sidebar's background
+  lbd.checkSidebarImage();
+
+  // Init navigation toggle for small screens
+  if (window_width <= 991) {
+    lbd.initRightMenu();
+  }
+
+  //  Activate the tooltips
+  $('[rel="tooltip"]').tooltip();
+
+  //      Activate the switches with icons
+  if ($('.switch').length != 0) {
+    $('.switch')['bootstrapSwitch']();
+  }
+  //      Activate regular switches
+  if ($("[data-toggle='switch']").length != 0) {
+    $("[data-toggle='switch']").wrap('<div class="switch" />').parent().bootstrapSwitch();
+  }
+
+  $('.form-control').on("focus", function () {
+    $(this).parent('.input-group').addClass("input-group-focus");
+  }).on("blur", function () {
+    $(this).parent(".input-group").removeClass("input-group-focus");
+  });
+
+  // Fixes sub-nav not working as expected on IOS
+  $('body').on('touchstart.dropdown', '.dropdown-menu', function (e) {
+    e.stopPropagation();
+  });
+});
+
+// activate collapse right menu when the windows is resized
+$(window).resize(function () {
+  if ($(window).width() <= 991) {
+    lbd.initRightMenu();
+  }
+});
+
+lbd = {
+  misc: {
+    navbar_menu_visible: 0
+  },
+
+  checkSidebarImage: function checkSidebarImage() {
+    $sidebar = $('.sidebar');
+    image_src = $sidebar.data('image');
+
+    if (image_src !== undefined) {
+      sidebar_container = '<div class="sidebar-background" style="background-image: url(' + image_src + ') "/>';
+      $sidebar.append(sidebar_container);
+    }
+  },
+  initRightMenu: function initRightMenu() {
+    if (!navbar_initialized) {
+      $navbar = $('nav').find('.navbar-collapse').first().clone(true);
+
+      $sidebar = $('.sidebar');
+      sidebar_color = $sidebar.data('color');
+
+      $logo = $sidebar.find('.logo').first();
+      logo_content = $logo[0].outerHTML;
+
+      ul_content = '';
+
+      $navbar.attr('data-color', sidebar_color);
+
+      //add the content from the regular header to the right menu
+      $navbar.children('ul').each(function () {
+        content_buff = $(this).html();
+        ul_content = ul_content + content_buff;
+      });
+
+      // add the content from the sidebar to the right menu
+      content_buff = $sidebar.find('.nav').html();
+      ul_content = ul_content + content_buff;
+
+      ul_content = '<div class="sidebar-wrapper">' + '<ul class="nav navbar-nav">' + ul_content + '</ul>' + '</div>';
+
+      navbar_content = logo_content + ul_content;
+
+      $navbar.html(navbar_content);
+
+      $('body').append($navbar);
+
+      background_image = $sidebar.data('image');
+      if (background_image != undefined) {
+        $navbar.css('background', "url('" + background_image + "')").removeAttr('data-nav-image').addClass('has-image');
+      }
+
+      $toggle = $('.navbar-toggle');
+
+      $navbar.find('a').removeClass('btn btn-round btn-default');
+      $navbar.find('button').removeClass('btn-round btn-fill btn-info btn-primary btn-success btn-danger btn-warning btn-neutral');
+      $navbar.find('button').addClass('btn-simple btn-block');
+
+      $toggle.click(function () {
+        if (lbd.misc.navbar_menu_visible == 1) {
+          $('html').removeClass('nav-open');
+          lbd.misc.navbar_menu_visible = 0;
+          $('#bodyClick').remove();
+          setTimeout(function () {
+            $toggle.removeClass('toggled');
+          }, 400);
+        } else {
+          setTimeout(function () {
+            $toggle.addClass('toggled');
+          }, 430);
+
+          div = '<div id="bodyClick"></div>';
+          $(div).appendTo("body").click(function () {
+            $('html').removeClass('nav-open');
+            lbd.misc.navbar_menu_visible = 0;
+            $('#bodyClick').remove();
+            setTimeout(function () {
+              $toggle.removeClass('toggled');
+            }, 400);
+          });
+
+          $('html').addClass('nav-open');
+          lbd.misc.navbar_menu_visible = 1;
+        }
+      });
+      navbar_initialized = true;
+    }
+  }
+
+  // Returns a function, that, as long as it continues to be invoked, will not
+  // be triggered. The function will be called after it stops being called for
+  // N milliseconds. If `immediate` is passed, trigger the function on the
+  // leading edge, instead of the trailing.
+
+};function debounce(func, wait, immediate) {
+  var timeout;
+  return function () {
+    var context = this,
+        args = arguments;
+    clearTimeout(timeout);
+    timeout = setTimeout(function () {
+      timeout = null;
+      if (!immediate) func.apply(context, args);
+    }, wait);
+    if (immediate && !timeout) func.apply(context, args);
+  };
+};
+
+$(function () {
+  $('[data-toggle="checkbox"]').radiocheck({
+    checkboxTemplate: '<span class="icons"><span class="first-icon fa fa-square-o"></span><span class="second-icon fa fa-check-square-o"></span></span>'
+  });
+  $('[data-toggle="checkbox"]').on('change', function (e) {
+    e && e.preventDefault() && e.stopPropagation();
+    $(this).prop('checked') ? $(this).data('radiocheck').check() : $(this).data('radiocheck').uncheck();
+    $(this).parent('.checkbox').toggleClass('checked');
+  });
+});
 
 /***/ }),
 
