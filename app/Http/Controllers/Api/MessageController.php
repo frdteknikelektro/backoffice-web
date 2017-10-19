@@ -6,7 +6,7 @@ use App\User;
 use App\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Illuminate\Mail\Events\MessageSent;
+use App\Events\MessageSent;
 
 class MessageController extends Controller
 {
