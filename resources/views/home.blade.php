@@ -10,6 +10,32 @@
 @section('content')
 <div class="container-fluid">
   <div class="row">
+    <div class="col-md-6">
+      <div class="card chat-room">
+        <div class="header">
+          <h4 class="title">Chats</h4>
+          <p class="category">Chat room</p>
+        </div>
+        <div class="content">
+          <div class="messages-container">
+            <chat-messages
+                :messages="messages"
+                :user="{{ Auth::user() }}"
+            ></chat-messages>
+          </div>
+          <chat-form
+              v-on:messagesent="messagesStore"
+              :user="{{ Auth::user() }}"
+          ></chat-form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+    </div>
+  </div>
+
+  <div class="row">
     <div class="col-md-4">
       <div class="card">
         <div class="header">
@@ -78,27 +104,6 @@
               <i class="fa fa-check"></i> Data information certified
             </div>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-md-6">
-      <div class="card chat-room">
-        <div class="header">
-          <h4 class="title">Chats</h4>
-          <p class="category">Chat room</p>
-        </div>
-        <div class="content">
-          <div class="messages-container">
-            <chat-messages
-                :messages="messages"
-                :user="{{ Auth::user() }}"
-            ></chat-messages>
-          </div>
-          <chat-form
-              v-on:messagesent="messagesStore"
-              :user="{{ Auth::user() }}"
-          ></chat-form>
         </div>
       </div>
     </div>
