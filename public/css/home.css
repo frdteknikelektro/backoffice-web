@@ -66,3 +66,33 @@
   text-align: center;
 }
 
+.chat-room .chat {
+  list-style: none;
+  margin: 0;
+  padding: 0 15px;
+}
+
+.chat-room .chat li {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px dotted #B3A9A9;
+}
+
+.chat-room .chat li .chat-body.self {
+  text-align: right;
+}
+
+.chat-room .chat li .chat-body .header {
+  padding: 0px;
+}
+
+.chat-room .chat li .chat-body p {
+  margin: 0;
+  color: #777777;
+}
+
+.chat-room .content .messages-container {
+  overflow-y: scroll;
+  height: 350px;
+}
+
