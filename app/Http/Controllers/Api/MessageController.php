@@ -45,13 +45,16 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'exists:users,id',
             'message' => 'required|string'
         ], [], [
             'user_id' => 'user'
         ]);
 
-        $user = User::find($request->user_id);
+        $user = auth()->user();
+        if ($request->exists('user_id')) {
+            $user = User::find($request->user_id);
+        }
 
         $message = new Message;
         foreach ([ 'message' ] as $key) {
