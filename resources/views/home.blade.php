@@ -1,5 +1,10 @@
 @extends('layouts.app')
 
+@section('styles')
+@parent
+<link href="{{ mix('/css/home.css') }}" rel="stylesheet">
+@endsection
+
 @section('content-title', 'Home')
 
 @section('content')
