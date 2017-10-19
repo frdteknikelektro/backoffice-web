@@ -111,7 +111,7 @@ module.exports = {
   initGoogleMaps: function() {
     var myLatlng = new google.maps.LatLng(40.748817, -73.985428);
     var mapOptions = {
-      zoom: 13,
+      zoom: 7,
       center: myLatlng,
       scrollwheel: false, //we disable de scroll over the map, it is a really annoing when you scroll through page
       styles: [{
@@ -203,13 +203,23 @@ module.exports = {
     }
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
 
-    var marker = new google.maps.Marker({
-      position: myLatlng,
-      title: "Hello World!"
-    });
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        var latlng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
 
-    // To add the marker to the map, call setMap();
-    marker.setMap(map);
+        map.setCenter(latlng);
+        var marker = new google.maps.Marker({
+          position: latlng,
+          title: "Hello World!"
+        });
+        marker.setMap(map);
+      }, function() {
+        console.log('Error: The Geolocation service failed.');
+      });
+    } else {
+      console.log('Error: Your browser doesn\'t support geolocation.');
+    }
   },
 
   showNotification: function(from, align) {
@@ -218,7 +228,6 @@ module.exports = {
     $.notify({
       icon: "pe-7s-gift",
       message: "Welcome to <b>Light Bootstrap Dashboard</b> - a beautiful freebie for every web developer."
-
     }, {
       type: type[color],
       timer: 4000,

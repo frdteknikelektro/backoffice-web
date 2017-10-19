@@ -32,6 +32,15 @@
     </div>
 
     <div class="col-md-6">
+      <div class="card">
+        <div class="header">
+          <h4 class="title">Maps</h4>
+          <p class="category">Maps</p>
+        </div>
+        <div class="content">
+          <div id="map" style="height:390px"></div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -116,3 +125,7 @@
 <script src="{{ mix('/js/vendor.js') }}" charset="utf-8"></script>
 <script src="{{ mix('/js/home.js') }}" charset="utf-8"></script>
 @endsection
+
+@push('body')
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=true"></script>
+@endpush
