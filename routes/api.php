@@ -14,5 +14,14 @@ use Illuminate\Http\Request;
 */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+    return response()->json([
+        'code' => 200,
+        'status' => 'success',
+        'data' => $request->user()
+    ]);
+});
+
+Route::group([ 'middleware' => [ 'auth:api' ] ], function () {
+    Route::resource('users', 'Api\UserController', [ 'except' => 'create', 'edit' ]);
+    Route::resource('messages', 'Api\MessageController');
 });

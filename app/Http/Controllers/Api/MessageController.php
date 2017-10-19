@@ -1,15 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\User;
 use App\Message;
-use App\Events\MessageSent;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Mail\Events\MessageSent;
 
-/**
- * Message Contoller
- */
 class MessageController extends Controller
 {
     /**
@@ -19,7 +17,13 @@ class MessageController extends Controller
      */
     public function index()
     {
-        //
+        $messages = Message::with('user')->latest()->paginate();
+
+        return response()->json([
+            'code' => 200,
+            'status' => 'success',
+            'data' => $messages
+        ]);
     }
 
     /**
@@ -40,7 +44,30 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'user_id' => 'required|exists:users,id',
+            'message' => 'required|string'
+        ], [], [
+            'user_id' => 'user'
+        ]);
+
+        $user = User::find($request->user_id);
+
+        $message = new Message;
+        foreach ([ 'message' ] as $key) {
+            if ($request->exists($key)) {
+                $message->{$key} = $request->{$key};
+            }
+        }
+        $user->messages()->save($message);
+
+        broadcast(new MessageSent($user, $message))->toOthers();
+
+        return response()->json([
+            'code' => 201,
+            'status' => 'success',
+            'data' => $message
+        ], 201);
     }
 
     /**

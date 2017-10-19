@@ -23,6 +23,7 @@ const app = new Vue({
     el: '#app',
 
     data: {
+        user: {},
         messages: []
     },
 
@@ -34,6 +35,10 @@ const app = new Vue({
             user: e.user
           });
         }.bind(this));
+
+        axios.get('/api/user').then(response => {
+            this.user = response.data.data;
+        });
     },
 
     updated: function () {
@@ -45,7 +50,7 @@ const app = new Vue({
 
     methods: {
         messagesIndex() {
-            return axios.get('/messages').then(response => {
+            return axios.get('/api/messages').then(response => {
                 this.messages = response.data.data.data.reverse();
             });
         },
@@ -53,7 +58,7 @@ const app = new Vue({
         messagesStore(message) {
             this.messages.push(message);
 
-            axios.post('/messages', {
+            axios.post('/api/messages', {
                 user_id: message.user.id,
                 message: message.message
             }).then(response => {

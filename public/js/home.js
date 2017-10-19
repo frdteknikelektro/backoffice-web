@@ -8288,10 +8288,13 @@ var app = new Vue({
     el: '#app',
 
     data: {
+        user: {},
         messages: []
     },
 
     created: function created() {
+        var _this = this;
+
         this.messagesIndex();
         Echo.private('chat').listen('MessageSent', function (e) {
             this.messages.push({
@@ -8299,6 +8302,10 @@ var app = new Vue({
                 user: e.user
             });
         }.bind(this));
+
+        axios.get('/api/user').then(function (response) {
+            _this.user = response.data.data;
+        });
     },
 
 
@@ -8311,16 +8318,16 @@ var app = new Vue({
 
     methods: {
         messagesIndex: function messagesIndex() {
-            var _this = this;
+            var _this2 = this;
 
-            return axios.get('/messages').then(function (response) {
-                _this.messages = response.data.data.data.reverse();
+            return axios.get('/api/messages').then(function (response) {
+                _this2.messages = response.data.data.data.reverse();
             });
         },
         messagesStore: function messagesStore(message) {
             this.messages.push(message);
 
-            axios.post('/messages', {
+            axios.post('/api/messages', {
                 user_id: message.user.id,
                 message: message.message
             }).then(function (response) {

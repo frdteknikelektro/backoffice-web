@@ -20,12 +20,12 @@
           <div class="messages-container">
             <chat-messages
                 :messages="messages"
-                :user="{{ Auth::user() }}"
+                :user="user"
             ></chat-messages>
           </div>
           <chat-form
               v-on:messagesent="messagesStore"
-              :user="{{ Auth::user() }}"
+              :user="user"
           ></chat-form>
         </div>
       </div>
